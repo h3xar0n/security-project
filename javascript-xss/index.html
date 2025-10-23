@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue.js XSS Demo</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+</head>
+<body>
+    <div id="app">
+        <h1>Welcome, {{ username }}!</h1>
+        <div v-html="userInput"></div>
+        <input type="text" v-model="userInput" placeholder="Enter some HTML here">
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                username: 'Guest',
+                userInput: '<b>Hello from Vue!</b>'
+            }
+        });
+    </script>
+</body>
+</html>
