@@ -9,8 +9,8 @@
 <body>
     <div id="app">
         <h1>Welcome, {{ username }}!</h1>
-        <div v-html="userInput"></div>
-        <input type="text" v-model="userInput" placeholder="Enter some HTML here">
+        <div v-text="userInput"></div>
+        <input type="text" v-model="userInput" placeholder="Enter something here">
     </div>
 
     <script>

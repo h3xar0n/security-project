@@ -5,7 +5,7 @@ import json
 
 class TestTerraformValidation(unittest.TestCase):
 
-    def test_gcs_bucket_is_public(self):
+    def test_gcs_bucket_is_not_public(self):
         # This test assumes Terraform is installed and configured.
         # It is for demonstration purposes only and will not be run.
 
@@ -27,12 +27,12 @@ class TestTerraformValidation(unittest.TestCase):
         # Find the bucket resource and check for public access
         found_public_binding = False
         for resource in plan_json.get("resource_changes", []):
-            if resource["type"] == "google_storage_bucket_iam_member" and resource["name"] == "insecure_bucket-public-access":
-                if resource["change"]["after"]["member"] == "allUsers" and resource["change"]["after"]["role"] == "roles/storage.objectViewer":
+            if resource["type"] == "google_storage_bucket_iam_member":
+                if resource["change"]["after"]["member"] == "allUsers":
                     found_public_binding = True
                     break
         
-        self.assertTrue(found_public_binding, "The GCS bucket is not configured for public access.")
+        self.assertFalse(found_public_binding, "The GCS bucket is configured for public access.")
 
         # Clean up the plan file
         os.remove(plan_path)
